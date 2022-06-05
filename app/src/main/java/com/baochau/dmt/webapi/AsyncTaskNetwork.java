@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 interface CallAPI {
-    void showListComment(String contentApi);
+    void showListComment(String contentApi) throws IOException;
 }
 
 public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
@@ -30,7 +30,7 @@ public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
         super.onPreExecute();
 
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Đang xử lý. Vui lòng đợi trong ít phút!");
+        progressDialog.setMessage("Đang xử lý. Vui lòng đợi trong giây lát!");
         progressDialog.show();
     }
 
@@ -43,11 +43,7 @@ public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
-                String temp="";
-                while ((line=br.readLine())!=null){
-                    temp+=line;
-                }
+                String temp= br.readLine();
                 temp=temp.substring(91,temp.length()-40);
                 stringBuilder.append(temp);
                 br.close();

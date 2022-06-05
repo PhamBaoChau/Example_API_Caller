@@ -55,11 +55,13 @@
         app:layout_constraintTop_toTopOf="@id/iconReply" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/iconReply"
         app:layout_constraintStart_toStartOf="@id/iconReply"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:visibility="gone"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

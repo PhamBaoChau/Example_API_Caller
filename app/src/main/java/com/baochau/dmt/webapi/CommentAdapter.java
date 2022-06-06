@@ -1,24 +1,21 @@
 package com.baochau.dmt.webapi;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
-
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-
+import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder> {
-    private final ArrayList<Comment> comments;
 
-    public CommentAdapter(ArrayList<Comment> comments) {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder> {
+    private final List<Comment> comments;
+
+    public CommentAdapter(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -31,11 +28,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentI
 
     @Override
     public void onBindViewHolder(@NonNull CommentItemViewHolder holder, int position) {
-        Comment item=comments.get(position);
+        Comment item= comments.get(position);
         Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(holder.avatar);
         holder.fullName.setText(item.full_name);
         holder.content.setText(item.content);
-        holder.numReply.setText(item.total+" reply");
+//        holder.numReply.setText(String.valueOf(item.total)+" reply");
 
     }
 

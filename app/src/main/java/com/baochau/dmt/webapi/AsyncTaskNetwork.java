@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 interface CallAPI {
@@ -44,7 +43,7 @@ public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String temp= br.readLine();
-                temp=temp.substring(91,temp.length()-40);
+                temp=temp.substring(90,temp.length()-39);
                 stringBuilder.append(temp);
                 br.close();
                 return stringBuilder.toString();
@@ -59,8 +58,13 @@ public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressDialog.dismiss();
-        if (callAPI != null)
-            callAPI.showListComment(s);
+        if (callAPI != null) {
+            try {
+                callAPI.showListComment(s);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }

@@ -37,31 +37,35 @@
         app:layout_constraintTop_toBottomOf="@id/fullName"
         android:textColor="@color/black_grey"/>
 
-    <ImageView
-        android:id="@+id/iconReply"
+    <LinearLayout
+        android:id="@+id/layoutReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_reply"
         app:layout_constraintStart_toStartOf="@id/fullName"
         app:layout_constraintTop_toBottomOf="@+id/content"
-        android:layout_marginTop="15dp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iconReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_reply" />
 
-    <TextView
-        android:id="@+id/reply"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="4 reply"
-        app:layout_constraintBottom_toBottomOf="@id/iconReply"
-        app:layout_constraintStart_toEndOf="@id/iconReply"
-        app:layout_constraintTop_toTopOf="@id/iconReply" />
+        <TextView
+            android:id="@+id/reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvReply"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/iconReply"
-        app:layout_constraintStart_toStartOf="@id/iconReply"
+        app:layout_constraintTop_toBottomOf="@id/layoutReply"
+        app:layout_constraintStart_toStartOf="@id/layoutReply"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="15dp"
         android:visibility="gone"/>

@@ -43,7 +43,6 @@ public class AsyncTaskNetwork extends AsyncTask<String, Void, String> {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String temp= br.readLine();
-                temp=temp.substring(90,temp.length()-39);
                 stringBuilder.append(temp);
                 br.close();
                 return stringBuilder.toString();

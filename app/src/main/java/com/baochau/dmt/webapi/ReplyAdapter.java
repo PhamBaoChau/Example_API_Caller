@@ -15,9 +15,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemViewHolder>{
+public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemViewHolder> {
     private Context context;
-    private final List<Comment>replys;
+    private final List<Comment> replys;
 
     public ReplyAdapter(Context context, List<Comment> replys) {
         this.context = context;
@@ -41,7 +41,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemVie
 
     @Override
     public int getItemCount() {
-        return replys.size();
+        return replys==null?0: replys.size();
     }
 
     public class ReplyItemViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +58,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemVie
             content = itemView.findViewById(R.id.content);
             numReply = itemView.findViewById(R.id.reply);
             rvReply = itemView.findViewById(R.id.rvReply);
-            layoutReply=itemView.findViewById(R.id.layoutReply);
+            layoutReply = itemView.findViewById(R.id.layoutReply);
+
+            layoutReply.setVisibility(View.GONE);
+            rvReply.setVisibility(View.GONE);
         }
     }
 }

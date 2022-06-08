@@ -14,11 +14,13 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallAPI {
     RecyclerView rvComment, rvReply;
     Moshi moshi;
     Type commentType;
     JsonAdapter<List<Comment>> jsonAdapter;
+    List<Comment> comments;
+    CommentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,29 +34,14 @@ public class MainActivity extends AppCompatActivity {
         moshi = new Moshi.Builder().build();
         commentType = Types.newParameterizedType(List.class, Comment.class);
         jsonAdapter = moshi.adapter(commentType);
-
-        new AsyncTaskNetwork(this, new CallAPI() {
-            @Override
-            public void showListComment(String contentApi) throws IOException {
-                contentApi = contentApi.substring(90, contentApi.length() - 39);
-                final List<Comment> comments = jsonAdapter.fromJson(contentApi);
-                rvComment.setAdapter(new CommentAdapter(MainActivity.this, comments));
-            }
-        }).execute(url);
+        new AsyncTaskNetwork(this, this).execute(url);
     }
 
-    //        new AsyncTaskNetwork(this, new CallAPI() {
-//            @Override
-//            public void showListComment(String contentApi) throws IOException {
-//                final List<Comment> comments = jsonAdapter.fromJson(contentApi);
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        rvReply.setAdapter(new CommentAdapter(comments));
-//                    }
-//                });
-//            }
-//        }).execute(urlReply);
-
+    @Override
+    public void showListComment(String contentApi) throws IOException {
+        contentApi = contentApi.substring(90, contentApi.length() - 39);
+        comments = jsonAdapter.fromJson(contentApi);
+        adapter = new CommentAdapter(MainActivity.this, comments);
+        rvComment.setAdapter(adapter);
+    }
 }

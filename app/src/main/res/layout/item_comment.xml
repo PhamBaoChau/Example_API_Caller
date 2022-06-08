@@ -44,8 +44,7 @@
         app:layout_constraintStart_toStartOf="@id/fullName"
         app:layout_constraintTop_toBottomOf="@+id/content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:visibility="gone">
+        android:layout_marginTop="15dp">
         <ImageView
             android:id="@+id/iconReply"
             android:layout_width="wrap_content"
@@ -67,8 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/layoutReply"
         app:layout_constraintStart_toStartOf="@id/layoutReply"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="15dp"
-        android:visibility="gone"/>
+        android:layout_marginTop="15dp" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.baochau.dmt.webapi;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,32 +46,38 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentI
         Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(holder.avatar);
         holder.fullName.setText(item.full_name);
         holder.content.setText(item.content);
+        holder.numReply.setText(String.valueOf(item.replys.total));
 
-        String url = "https://usi-saas.vnexpress.net/index/getreplay?siteid=1000000&objectid=4470485&objecttype=1&id="
-                + item.comment_id
-                + "&limit=12&offset=0&cookie_aid=7yrpja7cci6u00om.1654269095.des&sort_by=like&template_type=1";
-        Moshi moshi = new Moshi.Builder().build();
-        Type type = Types.newParameterizedType(List.class, Comment.class);
-        JsonAdapter<List<Comment>> jsonAdapter = moshi.adapter(type);
-        new AsyncTaskNetwork(context, new CallAPI() {
-            @Override
-            public void showListComment(String contentApi) throws IOException {
-                contentApi = contentApi.substring(49, contentApi.length() - 34);
-                List<Comment> replies = jsonAdapter.fromJson(contentApi);
-                if (replies.size()>0){
-                    holder.layoutReply.setVisibility(View.VISIBLE);
-                    holder.numReply.setText(String.valueOf(replies.size()) + " reply");
+        holder.rvReply.setVisibility(View.GONE);
+        if ((item.replys.total>0) && (item.replys.items!=null)){
+            holder.layoutReply.setVisibility(View.VISIBLE);
+            holder.layoutReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.rvReply.setVisibility(View.VISIBLE);
+                    holder.layoutReply.setVisibility(View.GONE);
+                    String url = "https://usi-saas.vnexpress.net/index/getreplay?siteid=1000000&objectid=4470485&objecttype=1&id="
+                            + item.comment_id
+                            + "&limit=12&offset=0&cookie_aid=7yrpja7cci6u00om.1654269095.des&sort_by=like&template_type=1";
+                    new AsyncTaskNetwork(context, new CallAPI() {
+                        @Override
+                        public void showListComment(String contentApi) throws IOException {
+                            Moshi moshi = new Moshi.Builder().build();
+                            Type type = Types.newParameterizedType(List.class, Comment.class);
+                            JsonAdapter<List<Comment>> jsonAdapter = moshi.adapter(type);
+                            contentApi = contentApi.substring(49, contentApi.length() - 34);
+                            final List<Comment> replies = jsonAdapter.fromJson(contentApi);
+                            item.replys.items=replies;
+                            holder.rvReply.setLayoutManager(new LinearLayoutManager(context));
+                            holder.rvReply.setAdapter( new ReplyAdapter(context, item.replys.items));
+                        }
+                    }).execute(url);
                 }
-//                System.out.println("Chau: "+replys.get(1).full_name);
-                holder.layoutReply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        holder.rvReply.setVisibility(View.VISIBLE);
-                        holder.rvReply.setAdapter( new ReplyAdapter(holder.itemView.getContext(), replies));
-                    }
-                });
-            }
-        }).execute(url);
+            });
+        }
+        else {
+            holder.layoutReply.setVisibility(View.GONE);
+        }
     }
 
     @Override

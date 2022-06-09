@@ -10,7 +10,6 @@
         android:id="@+id/avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toStartOf="@+id/fullName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +18,6 @@
         android:id="@+id/fullName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Châu"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +29,6 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Content"
         app:layout_constraintStart_toStartOf="@id/fullName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fullName"
@@ -44,7 +41,8 @@
         app:layout_constraintStart_toStartOf="@id/fullName"
         app:layout_constraintTop_toBottomOf="@+id/content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:visibility="gone">
         <ImageView
             android:id="@+id/iconReply"
             android:layout_width="wrap_content"
@@ -66,7 +64,8 @@
         app:layout_constraintTop_toBottomOf="@id/layoutReply"
         app:layout_constraintStart_toStartOf="@id/layoutReply"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:visibility="gone"/>
 
 
 </android.support.constraint.ConstraintLayout>

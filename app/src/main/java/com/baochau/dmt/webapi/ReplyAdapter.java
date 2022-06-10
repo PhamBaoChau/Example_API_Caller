@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,9 +38,18 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemVie
     @Override
     public void onBindViewHolder(@NonNull ReplyItemViewHolder replyItemViewHolder, int i) {
         Comment item = replys.get(i);
-        Picasso.get().load("https://i.imgur.com/DvpvklR.png").into(replyItemViewHolder.avatar);
         replyItemViewHolder.fullName.setText(item.full_name);
-        replyItemViewHolder.content.setText(item.content);
+        replyItemViewHolder.content.setText(android.text.Html.fromHtml(item.content));
+        String url = "https://my.vnexpress.net/apifrontend/getusersprofile?myvne_users_id%5B%5D=" + item.userid;;
+        new AsyncTaskNetwork(context, new CallAPI() {
+            @Override
+            public void showListComment(String contentApi) throws IOException, JSONException {
+                JSONObject jsonObject = new JSONObject(contentApi);
+                String url_avatar=jsonObject.getJSONObject("arrUsers").getJSONObject(String.valueOf(item.userid)).getString("user_avatar");
+                System.out.println("Chau: "+url_avatar);
+                Picasso.get().load(url_avatar).into(replyItemViewHolder.avatar);
+            }
+        }).execute(url);
     }
 
     @Override

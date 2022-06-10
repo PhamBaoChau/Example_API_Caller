@@ -18,31 +18,33 @@
         android:id="@+id/fullName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="10dp"
+        android:textColor="@color/black"
         android:textSize="15dp"
-        android:textColor="@color/black"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/fullName"
+        android:textColor="@color/black_grey"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/fullName"
         app:layout_constraintTop_toBottomOf="@id/fullName"
-        android:textColor="@color/black_grey"/>
+        android:maxLines="2"/>
 
     <LinearLayout
         android:id="@+id/layoutReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/fullName"
-        app:layout_constraintTop_toBottomOf="@+id/content"
-        android:orientation="horizontal"
         android:layout_marginTop="15dp"
-        android:visibility="gone">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/fullName"
+        app:layout_constraintTop_toBottomOf="@+id/content">
+
         <ImageView
             android:id="@+id/iconReply"
             android:layout_width="wrap_content"
@@ -53,19 +55,19 @@
             android:id="@+id/reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:gravity="center" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvReply"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layoutReply"
-        app:layout_constraintStart_toStartOf="@id/layoutReply"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="15dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/layoutReply"
+        app:layout_constraintTop_toBottomOf="@id/layoutReply" />
 
 
 </android.support.constraint.ConstraintLayout>

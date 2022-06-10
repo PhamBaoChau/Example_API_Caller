@@ -48,20 +48,5 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
-//        String url = "https://usi-saas.vnexpress.net/index/get?offset=0&limit=25&frommobile=0&sort=like&is_onload=1&objectid=4470485&objecttype=1&siteid=1000000&categoryid=1001014&sign=b4f1d09cb3a119da6fc6cac4a417b205&tab_active=most_like&cookie_aid=gix29diio21vbm7d.1654087277.des&usertype=4&template_type=1&app_mobile_device=0&title=Gia+%C4%91%C3%ACnh+ng%C3%A0y+n%C3%A0o+c%C5%A9ng+h%E1%BB%8Fi+t%C3%B4i+chuy%E1%BB%87n+ch%E1%BB%93ng+con+-+VnExpress";
-//        moshi = new Moshi.Builder().build();
-//        commentType = Types.newParameterizedType(List.class, Comment.class);
-//        jsonAdapter = moshi.adapter(commentType);
-//        new AsyncTaskNetwork(this, this).execute(url);
     }
-
-//    @Override
-//    public void showListComment(String contentApi) throws IOException {
-//        contentApi = contentApi.substring(90, contentApi.length() - 39);
-//        comments = jsonAdapter.fromJson(contentApi);
-//        adapter = new CommentAdapter(MainActivity.this, comments);
-//        rvComment.setAdapter(adapter);
-//    }
 }

@@ -2,8 +2,11 @@ package com.baochau.dmt.webapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
@@ -27,7 +30,4 @@ public interface ApiService {
 
     @GET("index/getreplay?siteid=1000000&objectid=4470485&objecttype=1&limit=12&offset=0&cookie_aid=7yrpja7cci6u00om.1654269095.des&sort_by=like&template_type=1")
     Call<Article>getRepliesByCommentId(@Query("id") int commentId);
-
-    @GET("apifrontend/getusersprofile")
-    Call<String>getUrlAvatar(@Query("myvne_users_id%5B%5D") int userId);
 }

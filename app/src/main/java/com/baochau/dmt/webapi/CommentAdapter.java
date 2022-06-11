@@ -4,6 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +31,7 @@ import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder> {
 
-    private Context context;
+    private final Context context;
     private final List<Comment> comments;
 
     public CommentAdapter(Context context, List<Comment> comments) {
@@ -45,13 +50,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentI
     public void onBindViewHolder(@NonNull CommentItemViewHolder holder, int position) {
         Comment item = comments.get(position);
         holder.fullName.setText(item.full_name);
-        holder.content.setText(android.text.Html.fromHtml(item.content));
+        String content = String.valueOf(android.text.Html.fromHtml(item.content));
+        if (content.length() > 200) {
+            for (int i = 170; i >= 0; i--) {
+                if (content.charAt(i) == ' ' && content.charAt(i - 1) != '.') {
+                    content = content.substring(0, i+1);
+                    break;
+                }
+            }
+            String html = content+"... Đọc tiếp";
+            SpannableString spannableString=new SpannableString(html);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    holder.content.setText(android.text.Html.fromHtml(item.content));
+                }
+            },html.length()-8,html.length(),0);
+            holder.content.setText(spannableString);
+            holder.content.setMovementMethod(LinkMovementMethod.getInstance());
+        } else holder.content.setText(content);
+
         holder.numReply.setText(String.valueOf(item.replys.total));
         holder.rvReply.setVisibility(View.GONE);
         holder.layoutReply.setVisibility(View.GONE);
 
         String url = "https://my.vnexpress.net/apifrontend/getusersprofile?myvne_users_id%5B%5D=" + item.userid;
-        ;
         new AsyncTaskNetwork(context, new CallAPI() {
             @Override
             public void showListComment(String contentApi) throws IOException, JSONException {
@@ -93,7 +116,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentI
         return comments.size();
     }
 
-    public class CommentItemViewHolder extends RecyclerView.ViewHolder {
+    public static class CommentItemViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView avatar;
         public TextView fullName, content, numReply;
         public RecyclerView rvReply;

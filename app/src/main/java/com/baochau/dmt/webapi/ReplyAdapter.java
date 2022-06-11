@@ -3,6 +3,9 @@ package com.baochau.dmt.webapi;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +42,26 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyItemVie
     public void onBindViewHolder(@NonNull ReplyItemViewHolder replyItemViewHolder, int i) {
         Comment item = replys.get(i);
         replyItemViewHolder.fullName.setText(item.full_name);
-        replyItemViewHolder.content.setText(android.text.Html.fromHtml(item.content));
+        String content = String.valueOf(android.text.Html.fromHtml(item.content));
+        if (content.length() > 80) {
+            for (int j = 80; j >= 0; j--) {
+                if (content.charAt(j) == ' ' && content.charAt(j - 1) != '.') {
+                    content = content.substring(0, j+1);
+                    break;
+                }
+            }
+            String html = content+"... Đọc tiếp";
+            SpannableString spannableString=new SpannableString(html);
+            spannableString.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    replyItemViewHolder.content.setText(android.text.Html.fromHtml(item.content));
+                }
+            },html.length()-8,html.length(),0);
+            replyItemViewHolder.content.setText(spannableString);
+            replyItemViewHolder.content.setMovementMethod(LinkMovementMethod.getInstance());
+        } else replyItemViewHolder.content.setText(content);
+
         String url = "https://my.vnexpress.net/apifrontend/getusersprofile?myvne_users_id%5B%5D=" + item.userid;;
         new AsyncTaskNetwork(context, new CallAPI() {
             @Override
